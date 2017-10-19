@@ -15,6 +15,7 @@ import { LoginProvider } from '../providers/login/login';
 import { StudentCoursesProvider } from '../providers/student-courses/student-courses';
 import { CoursesClassesProvider } from '../providers/courses-classes/courses-classes';
 import { ClassesTasksProvider } from '../providers/classes-tasks/classes-tasks';
+import { PlayerProvider } from '../providers/player/player';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { ClassesTasksProvider } from '../providers/classes-tasks/classes-tasks';
     LoginProvider,
     StudentCoursesProvider,
     CoursesClassesProvider,
-    ClassesTasksProvider
+    ClassesTasksProvider,
+    PlayerProvider
   ]
 })
 

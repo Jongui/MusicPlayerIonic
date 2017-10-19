@@ -3,6 +3,7 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { ClassesTasksProvider } from '../../providers/classes-tasks/classes-tasks';
+import { PlayerProvider } from '../../providers/player/player';
 
 @IonicPage()
 @Component({
@@ -18,7 +19,8 @@ export class KeyboardPage {
   instruments: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private screenOrientation: ScreenOrientation,
-    private platform: Platform, translate: TranslateService, public provider: ClassesTasksProvider) {
+      private platform: Platform, translate: TranslateService, public taskProvider: ClassesTasksProvider,
+      private playerProvider: PlayerProvider) {
     console.log("KeyboardConstructor");
     if (this.platform.is('cordova')) {
       this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE);
@@ -32,18 +34,25 @@ export class KeyboardPage {
   }
 
   loadTaskInfo(){
-    this.provider.loadTaskInfo(this.idCours, this.idClass, this.idTask)
+    this.taskProvider.loadTaskInfo(this.idCours, this.idClass, this.idTask)
       .then(data=>{
         let linesJson = data["lines"];
         for(var i = 0; i < linesJson.length; i++){
           let jsonLine = linesJson[i];
           this.instruments.push(jsonLine["inst"]);
+          if(i==0){
+            this.instrument = jsonLine;
+          }
         }
       });
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad KeyboardPage');
+  }
+
+  playExercise(){
+    this.playerProvider.playExercise("task" + this.idCours + this.idClass + this.idTask);
   }
 
 }

@@ -17,7 +17,7 @@
   <div class="keyboardDiv">
       {{ 'instrument' | translate }}:
       <ion-select [(ngModel)]="instrument">
-        <ion-option *ngFor="let inst of instruments" [value]={{ inst.code }}>{{ inst.desc }}</ion-option>
+        <ion-option *ngFor="let inst of instruments" [value]="code">{{ inst.desc }}</ion-option>
       </ion-select>
       {{ 'dynamics' | translate }}:
       <select id="selDynamic" class="loginFrameText">
@@ -35,7 +35,7 @@
   <br>
   <br>
   <div class="keyboardDiv">
-      <button id="btnPlay" class="btnBlue">{{ 'btnPlayAnswer' | translate }}</button>
+      <button id="btnPlay" class="btnBlue" (click)="playExercise()">{{ 'btnPlay' | translate }}</button>
       <button id="btnRecord" class="btnRed">{{ 'btnRecordAnswer' | translate }}</button>
       <button id="btnPlayAnswer" class="btnBlue">{{ 'btnPlayAnswer' | translate }}</button>
       <button id="btnSend" class="btnGreen">{{ 'btnSendAnswer' | translate }}</button>
