@@ -1,13 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Loading } from 'ionic-angular';
+import { AlertController, IonicPage, Loading, NavController, NavParams } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
-
-/**
- * Generated class for the LoginPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { LoginProvider } from '../../providers/login/login';
 
 @IonicPage()
 @Component({
@@ -16,9 +10,11 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class LoginPage {
   loading: Loading;
-  registerCredentials = { email: '', password: '' };
+  registerCredentials = { idStudent: '', password: '' };
+  response: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, translate: TranslateService) {
+  constructor(public alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams, translate: TranslateService,
+  private loginProvider: LoginProvider) {
     translate.setDefaultLang('en');
   }
 
@@ -27,7 +23,24 @@ export class LoginPage {
   }
 
   login(){
-    console.log('login LoginPage');
+    this.loginProvider.load(this.registerCredentials)
+      .then(data=>{
+        this.response = data;
+        console.log("Login status: " + this.response.status);
+        if(this.response.status == 0){
+          this.navCtrl.setRoot('CoursesPage',
+            {
+              "idStudent": this.registerCredentials.idStudent
+            });
+        } else {
+          const alert = this.alertCtrl.create({
+            title: 'Login',
+            subTitle: this.response.message,
+            buttons: ['Dismiss']
+          });
+          alert.present();
+        }
+      });
   }
 
   createAccount(){

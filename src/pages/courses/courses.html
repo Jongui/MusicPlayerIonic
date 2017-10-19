@@ -1,0 +1,54 @@
+<!--
+  Generated template for the CoursesPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{ 'coursesTitle' | translate }}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="courses-content" padding>
+  <ion-list>
+    <ion-item *ngFor="let cours of courses" style="background: #7892c2;">
+      <ion-card>
+        <ion-card-content>
+          <ion-card-title>
+            {{ cours.coursName }}
+          </ion-card-title>
+          <p>
+            {{ 'initialDate' | translate }}:
+            {{ cours.initDate | date:'dd-MM-yyyy'}}
+          </p>
+          <p>
+            {{ 'endDate' | translate }}:
+            {{ cours.endDate | date:'dd-MM-yyyy'}}
+          </p>
+          <p>
+            {{ 'coursHours' | translate }}:
+            {{ cours.hours }}
+          </p>
+        </ion-card-content>
+        <ion-row no-padding>
+          <ion-col>
+            <button ion-button clear small color="default" icon-start>
+              <ion-icon name='star'></ion-icon>
+                {{ 'favorite' | translate }}
+              </button>
+          </ion-col>
+          <ion-col text-right>
+            <button ion-button clear small color="default" (click)="coursSelected(cours)" icon-start>
+              <ion-icon name='share-alt'></ion-icon>
+                {{'enterCours' | translate }}
+              </button>
+          </ion-col>
+        </ion-row>
+      </ion-card>
+    </ion-item>
+  </ion-list>
+</ion-content>

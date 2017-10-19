@@ -20,7 +20,15 @@
           <ion-list inset>
 
             <ion-item>
-              <ion-input type="text" placeholder="{{ 'userName' | translate }}" name="email" [(ngModel)]="registerCredentials.email" required></ion-input>
+              <ion-input type="text" placeholder="{{ 'userName' | translate }}" name="userName" [(ngModel)]="registerCredentials.userName" required></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-input type="text" placeholder="{{ 'name' | translate }}" name="name" [(ngModel)]="registerCredentials.name" required></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-input type="text" placeholder="{{ 'email' | translate }}" name="email" [(ngModel)]="registerCredentials.email" required></ion-input>
             </ion-item>
 
             <ion-item>
@@ -38,7 +46,7 @@
       <ion-row>
         <ion-col class="signup-col">
           <button ion-button class="submit-btn" full type="submit" [disabled]="!registerForm.form.valid">{{'createAccount' | translate }}</button>
-          <button ion-button class="cancel-btn" block clear (click)="cancel()">{{ 'cancel' | translate }}</button>
+          <button ion-button class="cancel-btn" type="button" block clear (click)="cancel()">{{ 'cancel' | translate }}</button>
         </ion-col>
       </ion-row>
 
