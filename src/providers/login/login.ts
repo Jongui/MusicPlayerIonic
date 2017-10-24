@@ -19,10 +19,10 @@ export class LoginProvider {
       var url = this.ip + "login?idStudent=" + registerCredentials.idStudent + "&password="
           + registerCredentials.password + "&locale=" + locale;
 
-      //url = 'https://randomuser.me/api/?results=5'
       this.http.get(url)
         .map(res => res.json())
         .subscribe(data => {
+          console.log("data: " + data);
           let response =  {
                             "status": data.status,
                             "message": data.message

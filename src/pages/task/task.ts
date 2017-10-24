@@ -12,6 +12,7 @@ import { ClassesTasksProvider } from '../../providers/classes-tasks/classes-task
 export class TaskPage {
   idCours: number;
   idClass: number;
+  idStudent: string;
   classTitle: string;
   tasks: any;
 
@@ -20,6 +21,7 @@ export class TaskPage {
     this.idCours = navParams.get("idCours");
     this.classTitle = navParams.get("classTitle");
     this.idClass = navParams.get("idClass");
+    this.idStudent = navParams.get("idStudent");
     translate.setDefaultLang('en');
 
     this.tasks = [];
@@ -60,7 +62,8 @@ export class TaskPage {
       {
         "idCours": this.idCours,
         "idClass": this.idClass,
-        "idTask": task.idTask
+        "idTask": task.idTask,
+        "idStudent": this.idStudent
       });
   }
 

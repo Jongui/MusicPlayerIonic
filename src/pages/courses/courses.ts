@@ -52,7 +52,8 @@ export class CoursesPage {
     this.navCtrl.push('ClassesPage',
     {
       "idCours": cours.idCours,
-      "coursName": cours.coursName
+      "coursName": cours.coursName,
+      "idStudent": this.idStudent
     });
   }
 

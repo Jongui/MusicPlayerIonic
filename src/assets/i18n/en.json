@@ -10,6 +10,7 @@
   "createAccount": "Create new Account",
   "date": "Date",
   "description": "Description",
+  "dismiss": "Dismiss",
   "dynamics": "Dynamics",
   "email": "e-mail",
   "endDate": "End date",
@@ -21,7 +22,9 @@
   "keyboard": "Keyboard",
   "name": "Name",
   "newAccount":"New Account",
+  "password": "Password",
   "playInst": "Play Inst",
-  "userName": "User Name",
-  "password": "Password"
+  "sendAnswer": "Send Answer",
+  "stopRecording": "Stop recording",
+  "userName": "User Name"
 }

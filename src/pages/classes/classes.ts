@@ -11,6 +11,7 @@ import { CoursesClassesProvider } from '../../providers/courses-classes/courses-
 })
 export class ClassesPage {
 
+  idStudent: string;
   public idCours: number;
   public coursName: string;
   classes: any;
@@ -19,6 +20,7 @@ export class ClassesPage {
     private provider: CoursesClassesProvider) {
     this.idCours = navParams.get("idCours");
     this.coursName = navParams.get("coursName");
+    this.idStudent = navParams.get("idStudent");
     this.classes = [];
     this.loadCoursesClasses();
     translate.setDefaultLang('en');
@@ -48,7 +50,8 @@ export class ClassesPage {
                       {
                         "idCours": this.idCours,
                         "idClass": classModel.idClass,
-                        "classTitle": classModel.classTitle
+                        "classTitle": classModel.classTitle,
+                        "idStudent": this.idStudent
                       });
   }
 
