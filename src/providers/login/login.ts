@@ -19,6 +19,8 @@ export class LoginProvider {
       var url = this.ip + "login?idStudent=" + registerCredentials.idStudent + "&password="
           + registerCredentials.password + "&locale=" + locale;
 
+      console.log("Address: " + url);
+
       this.http.get(url)
         .map(res => res.json())
         .subscribe(data => {

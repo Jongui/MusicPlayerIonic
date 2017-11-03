@@ -5,22 +5,26 @@ page-keyboard {
   }
 
   .keyboard {
-      /*background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #74ad5a), color-stop(1, #68a54b));
-      background:-moz-linear-gradient(top, #74ad5a 5%, #68a54b 100%);
-      background:-webkit-linear-gradient(top, #74ad5a 5%, #68a54b 100%);
-      background:-o-linear-gradient(top, #74ad5a 5%, #68a54b 100%);
-      background:-ms-linear-gradient(top, #74ad5a 5%, #68a54b 100%);
-      background:linear-gradient(to bottom, #74ad5a 5%, #68a54b 100%);
-      filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#74ad5a', endColorstr='#68a54b',GradientType=0);*/
-      background-color:#74ad5a;
-      /*border:1px solid #3b6e22;*/
       display:inline-block;
       cursor:pointer;
       color:#ffffff;
       font-family:Arial;
       font-size:13px;
       font-weight:bold;
-      /*padding:64px 36px;*/
+      width: 40px;
+      height: 120px;
+      margin: 0 auto;
+      text-decoration:none;
+  }
+
+  .keyboardPressed {
+      background-color:#000000;
+      display:inline-block;
+      cursor:pointer;
+      color:#ffffff;
+      font-family:Arial;
+      font-size:13px;
+      font-weight:bold;
       width: 40px;
       height: 120px;
       margin: 0 auto;

@@ -54,7 +54,7 @@
       <ion-grid>
         <ion-row>
           <ion-col *ngFor="let button of buttons">
-            <button id="button.desc" class="keyboard" (touchstart)="startNote(button.note)" (touchend)="stopNote(button.note)" >{{ button.desc }}</button>
+            <button ion-button [color]="button.color" id="button.desc" class="keyboard" (touchstart)="startNote(button)" (touchend)="stopNote(button)" >{{ button.desc }}</button>
           </ion-col>
         </ion-row>
       </ion-grid>

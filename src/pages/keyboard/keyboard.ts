@@ -64,51 +64,63 @@ export class KeyboardPage {
   buttons = [
     {
       "note": 60,
-      "desc": "C3"
+      "desc": "C3",
+      "color": "secondary"
     },
     {
       "note": 62,
-      "desc": "D3"
+      "desc": "D3",
+      "color": "secondary"
     },
     {
       "note": 64,
-      "desc": "E3"
+      "desc": "E3",
+      "color": "secondary"
     },
     {
       "note": 65,
-      "desc": "F3"
+      "desc": "F3",
+      "color": "secondary"
     },
     {
       "note": 67,
-      "desc": "G3"
+      "desc": "G3",
+      "color": "secondary"
     },
     {
       "note": 69,
-      "desc": "A3"
+      "desc": "A3",
+      "color": "secondary"
     },
     {
       "note": 71,
-      "desc": "B3"
+      "desc": "B3",
+      "color": "secondary"
     },
     {
       "note": 72,
-      "desc": "C4"
+      "desc": "C4",
+      "color": "secondary"
     },
     {
       "note": 74,
-      "desc": "D4"
+      "desc": "D4",
+      "color": "secondary"
     },
     {
       "note": 76,
-      "desc": "E4"
+      "desc": "E4",
+      "color": "secondary"
     },
     {
       "note": 77,
-      "desc": "F4"
+      "desc": "F4",
+      "color": "secondary"
     },
     {
       "note": 79,
-      "desc": "G4"
+      "desc": "G4",
+      "color": "secondary"
     }
   ];
 
@@ -120,7 +132,6 @@ export class KeyboardPage {
   constructor(public alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams, private screenOrientation: ScreenOrientation,
       private platform: Platform, translate: TranslateService, public taskProvider: ClassesTasksProvider,
       private playerProvider: PlayerProvider) {
-    console.log("KeyboardConstructor");
     if (this.platform.is('cordova')) {
       this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE);
     }
@@ -155,32 +166,48 @@ export class KeyboardPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad KeyboardPage');
+
   }
 
   playExercise(){
     this.playerProvider.playExercise("task" + this.idCours + this.idClass + this.idTask);
   }
 
-  startNote(note: number){
-    console.log(this.instrument);
-    this.playerProvider.playNote(note, this.instrument, 0, this.dynamic, 0);
+  startNote(button: any){
+    button.color = "primary";
+    this.playerProvider.playNote(button.note, this.instrument, 0, this.dynamic, 0);
     if(this.recording){
+      this.stopPause();
         this.notesAnswer = {};
-        this.notesAnswer["note"] = note;
+        this.notesAnswer["note"] = button.note;
     }
     this.startTime = new Date().getTime() / 1000;
   }
 
-  stopNote(note: number){
-    console.log(this.instrument);
-    this.playerProvider.playNote(note, this.instrument, 0, this.dynamic, 1);
+  stopNote(button: any){
+    button.color = "secondary";
+    this.playerProvider.playNote(button.note, this.instrument, 0, this.dynamic, 1);
     let endTime = new Date().getTime() / 1000;
     let deltaTime = endTime - this.startTime;
     if(this.recording){
         this.notesAnswer["time"] = parseFloat(deltaTime.toFixed(2));
         this.taskAnswer.notes.push(this.notesAnswer);
+        this.startPause();
     }
+  }
+
+  private startPause(){
+    this.notesAnswer = {};
+    this.notesAnswer["note"] = 0;
+    this.startTime = new Date().getTime() / 1000;
+  }
+
+  private stopPause(){
+    if(this.startTime == 0) return;
+    let endTime = new Date().getTime() / 1000;
+    let deltaTime = endTime - this.startTime;
+    this.notesAnswer["time"] = parseFloat(deltaTime.toFixed(2));
+    this.taskAnswer.notes.push(this.notesAnswer);
   }
 
   playInst(){
@@ -198,25 +225,47 @@ export class KeyboardPage {
 
   playNote(index: number, playNotes: any[]){
     if(index >= playNotes.length){
-      console.log("index: " + index);
       this.indexNotes = 0;
       return;
     }
-    this.playerProvider.playScript(playNotes[index].time, playNotes[index].note,
-      this.instrument, this.dynamic)
-      .then(data=>{
-        index++;
-        this.playNote(index, playNotes);
-      });
+
+    let button = this.findButton(playNotes[index].note);
+    if(button != null) {
+      button.color = "primary";
+      this.playerProvider.playScript(playNotes[index].time, playNotes[index].note,
+        this.instrument, this.dynamic)
+        .then(data=>{
+          index++;
+          button.color = "secondary";
+          this.playNote(index, playNotes);
+        });
+      } else {
+        setTimeout(() => {
+          index++;
+          this.playNote(index, playNotes);
+        },
+        playNotes[index].time * 1000
+      );
+      }
+  }
+
+  private findButton(note: number){
+    for(let i = 0; i < this.buttons.length; i++){
+      let but = this.buttons[i];
+      if(but.note == note){
+        return but;
+      }
+    }
   }
 
   recordAnwser(){
     if(this.recording){
+        this.startTime = 0;
         this.recording = false;
-        console.log(this.taskAnswer);
         this.btnRecordText = this.translate.instant("btnRecordAnswer");
         //btnRecord.innerHTML = textsUI.recordAnswer;
     } else {
+        this.startTime = 0;
         this.taskAnswer = {};
         this.taskAnswer.notes = [];
         this.recording = true;

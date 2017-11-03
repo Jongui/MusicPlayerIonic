@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AlertController, IonicPage, Loading, NavController, NavParams } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
+import { Storage } from '@ionic/storage';
 import { LoginProvider } from '../../providers/login/login';
 
 @IonicPage()
@@ -14,8 +15,15 @@ export class LoginPage {
   response: any;
 
   constructor(public alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams, translate: TranslateService,
-  private loginProvider: LoginProvider) {
+  private loginProvider: LoginProvider, private storage: Storage) {
     translate.setDefaultLang('en');
+    this.storage.get('idStudent').then((val) => {
+      this.registerCredentials.idStudent = val;
+      this.storage.get('password').then((val) =>{
+        this.registerCredentials.password = val;
+        this.login();
+      });
+  });
   }
 
   ionViewDidLoad() {
@@ -28,6 +36,8 @@ export class LoginPage {
         this.response = data;
         console.log("Login status: " + this.response.status);
         if(this.response.status == 0){
+          this.storage.set("idStudent", this.registerCredentials.idStudent);
+          this.storage.set("password", this.registerCredentials.password);
           this.navCtrl.setRoot('CoursesPage',
             {
               "idStudent": this.registerCredentials.idStudent
