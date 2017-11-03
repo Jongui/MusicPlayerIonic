@@ -42,12 +42,11 @@
   <br>
   <br>
   <div class="keyboardDiv">
-      <button id="btnPlay" class="btnBlue" (click)="playExercise()">{{ 'btnPlay' | translate }}</button>
-      <button id="btnRecord" class="btnRed" (click)="recordAnwser()">{{ btnRecordText }}</button>
-      <button id="btnPlayAnswer" class="btnBlue" (click)="playAnswer()">{{ 'btnPlayAnswer' | translate }}</button>
-      <button id="btnSend" class="btnGreen" (click)="sendAnwser()">{{ 'btnSendAnswer' | translate }}</button>
+      <button ion-button [disabled]="btnPlay.disable" color="primary" (click)="playExercise()">{{ 'btnPlay' | translate }}</button>
+      <button ion-button [disabled]="btnPlay.disable" color="danger" (click)="recordAnwser()">{{ btnRecordText }}</button>
+      <button ion-button [disabled]="btnPlay.disable" color="primary" (click)="playAnswer()">{{ 'btnPlayAnswer' | translate }}</button>
+      <button ion-button [disabled]="btnPlay.disable" color="secondary" (click)="sendAnwser()">{{ 'btnSendAnswer' | translate }}</button>
   </div>
-  <br>
   <br>
   <div class="keyboardDiv">
     <ion-item >

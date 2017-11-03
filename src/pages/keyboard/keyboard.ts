@@ -26,6 +26,9 @@ export class KeyboardPage {
   startTime: any;
 
   dynamic: number;
+  btnPlay = {
+    disable: false
+  };
   dynamics = [
     {
       "value": 22,
@@ -170,7 +173,11 @@ export class KeyboardPage {
   }
 
   playExercise(){
-    this.playerProvider.playExercise("task" + this.idCours + this.idClass + this.idTask);
+    this.toogleButtons();
+    this.playerProvider.playExercise("task" + this.idCours + this.idClass + this.idTask)
+      .then(data=>{
+        this.toogleButtons();
+      });
   }
 
   startNote(button: any){
@@ -211,6 +218,7 @@ export class KeyboardPage {
   }
 
   playInst(){
+    this.toogleButtons();
     this.indexNotes = 0;
     for(var i = 0; i < this.lines.length; i++){
         let line = this.lines[i];
@@ -225,6 +233,7 @@ export class KeyboardPage {
 
   playNote(index: number, playNotes: any[]){
     if(index >= playNotes.length){
+      this.toogleButtons();
       this.indexNotes = 0;
       return;
     }
@@ -276,15 +285,18 @@ export class KeyboardPage {
 
   playAnswer(){
     this.indexNotes = 0;
+    this.toogleButtons();
     this.playNote(this.indexNotes, this.taskAnswer.notes);
   }
 
   sendAnwser(){
+    this.toogleButtons();
     let answer = JSON.stringify(this.taskAnswer);
     this.taskProvider.sendAnwser(this.idCours, this.idClass, this.idTask,
                 this.idStudent, answer, navigator.language)
                 .then(data=>{
                   let response: any;
+                  this.toogleButtons();
                   response = data;
                   let title = this.translate.instant("sendAnswer");
                   let dismiss = this.translate.instant("dismiss");
@@ -296,4 +308,13 @@ export class KeyboardPage {
                   alert.present();
                 });
   }
+
+  private toogleButtons(){
+    if(this.btnPlay.disable){
+      this.btnPlay.disable = false;
+    } else {
+        this.btnPlay.disable = true;
+    }
+  }
+
 }
