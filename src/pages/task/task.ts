@@ -15,6 +15,7 @@ export class TaskPage {
   idStudent: string;
   classTitle: string;
   tasks: any;
+  channel: number;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, translate: TranslateService,
     public provider: ClassesTasksProvider) {
@@ -22,6 +23,7 @@ export class TaskPage {
     this.classTitle = navParams.get("classTitle");
     this.idClass = navParams.get("idClass");
     this.idStudent = navParams.get("idStudent");
+    this.channel = navParams.get("channel");
     translate.setDefaultLang('en');
 
     this.tasks = [];
@@ -63,7 +65,8 @@ export class TaskPage {
         "idCours": this.idCours,
         "idClass": this.idClass,
         "idTask": task.idTask,
-        "idStudent": this.idStudent
+        "idStudent": this.idStudent,
+        "channel": this.channel
       });
   }
 

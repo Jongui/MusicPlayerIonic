@@ -16,11 +16,6 @@ export class CoursesPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, translate: TranslateService,
   private provider: StudentCoursesProvider) {
     this.idStudent = navParams.get("idStudent");
-    /*this.courses = [  new CoursModel(1, 'Music Harmony','2017-08-01', '2017-11-30', 60),
-                      new CoursModel(2, 'Music Ritm','2017-08-01', '2017-11-30', 60),
-                      new CoursModel(3, 'Music Theory','2017-08-11', '2017-11-30', 60),
-                      new CoursModel(4, 'Music Listening','2017-08-01', '2017-11-30', 60)
-    ];*/
     this.courses = [];
     this.loadCourses();
     translate.setDefaultLang('en');
@@ -41,7 +36,8 @@ export class CoursesPage {
                                         jsonLine["coursName"],
                                         jsonLine["initDate"],
                                         jsonLine["endDate"],
-                                        jsonLine["hours"]);
+                                        jsonLine["hours"],
+                                        jsonLine["channel"]);
             this.courses.push(cours);
           }
 
@@ -53,7 +49,8 @@ export class CoursesPage {
     {
       "idCours": cours.idCours,
       "coursName": cours.coursName,
-      "idStudent": this.idStudent
+      "idStudent": this.idStudent,
+      "channel": cours.channel
     });
   }
 

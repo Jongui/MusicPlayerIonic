@@ -26,9 +26,11 @@ export class KeyboardPage {
   startTime: any;
 
   dynamic: number;
-  btnPlay = {
-    disable: false
-  };
+  interactionDisable = false;
+  showKeyboardDiv = false;
+  showInteractivDiv = true;
+  keyboardDisable = false;
+  iconName = "arrow-down";
   dynamics = [
     {
       "value": 22,
@@ -131,6 +133,7 @@ export class KeyboardPage {
   indexNotes: number;
   notes = [];
   translate: TranslateService;
+  channel: number;
 
   constructor(public alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams, private screenOrientation: ScreenOrientation,
       private platform: Platform, translate: TranslateService, public taskProvider: ClassesTasksProvider,
@@ -143,6 +146,7 @@ export class KeyboardPage {
     this.idClass = navParams.get("idClass");
     this.idTask = navParams.get("idTask");
     this.idStudent = navParams.get("idStudent");
+    this.channel = navParams.get("channel");
     this.btnRecordText = translate.instant("btnRecordAnswer");
     this.translate = translate;
     this.instruments = [];
@@ -151,6 +155,7 @@ export class KeyboardPage {
     this.taskAnswer = {};
     this.taskAnswer.notes = [];
     this.loadTaskInfo();
+    this.loadStudentAnswer();
   }
 
   loadTaskInfo(){
@@ -168,6 +173,14 @@ export class KeyboardPage {
       });
   }
 
+  loadStudentAnswer(){
+    this.taskProvider.loadStudentAnswer(this.idCours, this.idClass, this.idTask, this.idStudent)
+      .then(data=>{
+        console.log(data);
+        this.taskAnswer = data;
+      })
+  }
+
   ionViewDidLoad() {
 
   }
@@ -182,7 +195,7 @@ export class KeyboardPage {
 
   startNote(button: any){
     button.color = "primary";
-    this.playerProvider.playNote(button.note, this.instrument, 0, this.dynamic, 0);
+    this.playerProvider.playNote(button.note, this.instrument, this.channel, this.dynamic, 0);
     if(this.recording){
       this.stopPause();
         this.notesAnswer = {};
@@ -193,7 +206,7 @@ export class KeyboardPage {
 
   stopNote(button: any){
     button.color = "secondary";
-    this.playerProvider.playNote(button.note, this.instrument, 0, this.dynamic, 1);
+    this.playerProvider.playNote(button.note, this.instrument, this.channel, this.dynamic, 1);
     let endTime = new Date().getTime() / 1000;
     let deltaTime = endTime - this.startTime;
     if(this.recording){
@@ -219,6 +232,7 @@ export class KeyboardPage {
 
   playInst(){
     this.toogleButtons();
+    this.toogleDiv();
     this.indexNotes = 0;
     for(var i = 0; i < this.lines.length; i++){
         let line = this.lines[i];
@@ -277,6 +291,10 @@ export class KeyboardPage {
         this.startTime = 0;
         this.taskAnswer = {};
         this.taskAnswer.notes = [];
+        this.taskAnswer.inst = [];
+        let instAnswer = {};
+        instAnswer["code"] = this.instrument;
+        this.taskAnswer.inst.push(instAnswer);
         this.recording = true;
         this.btnRecordText = this.translate.instant("stopRecording");;
         //btnRecord.innerHTML = textsUI.stopRecording;
@@ -286,6 +304,7 @@ export class KeyboardPage {
   playAnswer(){
     this.indexNotes = 0;
     this.toogleButtons();
+    console.log("this.taskAnswer: " + this.taskAnswer);
     this.playNote(this.indexNotes, this.taskAnswer.notes);
   }
 
@@ -309,11 +328,26 @@ export class KeyboardPage {
                 });
   }
 
-  private toogleButtons(){
-    if(this.btnPlay.disable){
-      this.btnPlay.disable = false;
+  toogleButtons(){
+    if(this.interactionDisable){
+      this.interactionDisable = false;
     } else {
-        this.btnPlay.disable = true;
+        this.interactionDisable = true;
+    }
+  }
+
+  toogleDiv(){
+    console.log("this.showKeyboardDiv: ", this.showKeyboardDiv);
+    if(this.showKeyboardDiv){
+      this.iconName = "arrow-down";
+      this.showKeyboardDiv = false;
+      this.showInteractivDiv = true;
+      this.keyboardDisable = false;
+    } else {
+      this.iconName = "arrow-up";
+      this.showKeyboardDiv = true;
+      this.showInteractivDiv = false;
+      this.keyboardDisable = true;
     }
   }
 

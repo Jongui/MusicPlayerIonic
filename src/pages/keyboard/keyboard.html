@@ -5,55 +5,51 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-navbar>
     <ion-title>{{ 'keyboard' | translate}}</ion-title>
   </ion-navbar>
-
 </ion-header>
-
-
 <ion-content padding overflow-scroll="false">
-  <div class="keyboardDiv">
+  <div class="keyboardDiv" *ngIf="showKeyboardDiv">
     <ion-grid>
       <ion-row>
-        <ion-col>
-          <ion-item>
+        <ion-col col-12>
+          <ion-item class="selw75">
             <ion-label>{{ 'instrument' | translate }}:</ion-label>
-            <ion-select [(ngModel)]="instrument">
+            <ion-select [(ngModel)]="instrument" class="custom-select">
               <ion-option *ngFor="let inst of instruments" [value]="inst.code">{{ inst.desc }}</ion-option>
             </ion-select>
           </ion-item>
         </ion-col>
-        <ion-col>
-          <ion-item>
+        <ion-col col-12>
+          <ion-item class="selw75">
             <ion-label>{{ 'dynamics' | translate }}:</ion-label>
-            <ion-select [(ngModel)]="dynamic">
+            <ion-select [(ngModel)]="dynamic" class="custom-select">
               <ion-option *ngFor="let dyna of dynamics" [value]="dyna.value">{{ dyna.desc }}</ion-option>
             </ion-select>
           </ion-item>
         </ion-col>
         <ion-col>
-          <button id="btnInstrument" class="btnBlue" (click)="playInst()">{{ 'playInst' | translate }}</button>
+          <button ion-button [disabled]="interactionDisable" color="primary" (click)="playInst()">{{ 'playInst' | translate }}</button>
         </ion-col>
       </ion-row>
     </ion-grid>
   </div>
-  <br>
-  <br>
-  <div class="keyboardDiv">
-      <button ion-button [disabled]="btnPlay.disable" color="primary" (click)="playExercise()">{{ 'btnPlay' | translate }}</button>
-      <button ion-button [disabled]="btnPlay.disable" color="danger" (click)="recordAnwser()">{{ btnRecordText }}</button>
-      <button ion-button [disabled]="btnPlay.disable" color="primary" (click)="playAnswer()">{{ 'btnPlayAnswer' | translate }}</button>
-      <button ion-button [disabled]="btnPlay.disable" color="secondary" (click)="sendAnwser()">{{ 'btnSendAnswer' | translate }}</button>
+  <div (click)="toogleDiv()" style="width: 100%; height: 25px; text-align: center;">
+    <ion-icon [name]="iconName" ></ion-icon>
   </div>
-  <br>
+  <div class="interactionDiv" *ngIf="showInteractivDiv">
+      <button ion-button class="interactionButton" [disabled]="interactionDisable" color="primary" (click)="playExercise()">{{ 'btnPlay' | translate }}</button>
+      <button ion-button class="interactionButton" [disabled]="interactionDisable" color="danger" (click)="recordAnwser()">{{ btnRecordText }}</button>
+      <button ion-button class="interactionButton" [disabled]="interactionDisable" color="primary" (click)="playAnswer()">{{ 'btnPlayAnswer' | translate }}</button>
+      <button ion-button class="interactionButton" [disabled]="interactionDisable" color="secondary" (click)="sendAnwser()">{{ 'btnSendAnswer' | translate }}</button>
+  </div>
   <div class="keyboardDiv">
     <ion-item >
       <ion-grid>
         <ion-row>
           <ion-col *ngFor="let button of buttons">
-            <button ion-button [color]="button.color" id="button.desc" class="keyboard" (touchstart)="startNote(button)" (touchend)="stopNote(button)" >{{ button.desc }}</button>
+            <button ion-button [color]="button.color" [disabled]="keyboardDisable" class="keyboard" (touchstart)="startNote(button)" (touchend)="stopNote(button)" >{{ button.desc }}</button>
           </ion-col>
         </ion-row>
       </ion-grid>

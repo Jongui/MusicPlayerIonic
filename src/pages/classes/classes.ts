@@ -15,12 +15,14 @@ export class ClassesPage {
   public idCours: number;
   public coursName: string;
   classes: any;
+  channel: number;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, translate: TranslateService,
     private provider: CoursesClassesProvider) {
     this.idCours = navParams.get("idCours");
     this.coursName = navParams.get("coursName");
     this.idStudent = navParams.get("idStudent");
+    this.channel = navParams.get("channel");
     this.classes = [];
     this.loadCoursesClasses();
     translate.setDefaultLang('en');
@@ -51,7 +53,8 @@ export class ClassesPage {
                         "idCours": this.idCours,
                         "idClass": classModel.idClass,
                         "classTitle": classModel.classTitle,
-                        "idStudent": this.idStudent
+                        "idStudent": this.idStudent,
+                        "channel": this.channel
                       });
   }
 
