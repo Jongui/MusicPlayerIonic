@@ -256,7 +256,7 @@ export class KeyboardPage {
     if(button != null) {
       button.color = "primary";
       this.playerProvider.playScript(playNotes[index].time, playNotes[index].note,
-        this.instrument, this.dynamic)
+        this.instrument, this.channel, this.dynamic)
         .then(data=>{
           index++;
           button.color = "secondary";

@@ -52,11 +52,11 @@ export class PlayerProvider {
         });
     });
   }
-  playScript(time: number, note: number, instrument: number, dynamic: number){
+  playScript(time: number, note: number, instrument: number, channel: number, dynamic: number){
     //http://192.168.0.103:8080/playScript?time=1.0&note=60&inst=20&channel=0&dynamic=120
     return new Promise(resolve => {
       let url = this.ip + "playScript?time=" + time + "&note=" + note + "&inst=" + instrument
-        + "&channel=" + 0 + "&dynamic=" + dynamic;
+        + "&channel=" + channel + "&dynamic=" + dynamic;
       this.http.get(url)
         .map(res => res.json())
         .subscribe(data => {
