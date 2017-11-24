@@ -53,8 +53,4 @@ export class LoginPage {
       });
   }
 
-  createAccount(){
-    this.navCtrl.push('NewAccountPage');
-  }
-
 }
